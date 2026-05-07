@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Elms+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+  font-family: "Elms Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+  background-color: #16161d;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+}
+
+.chance {
+    display: flex;
+    flex-direction: row;
+    margin: 10px;
+}
+
+.letter {
+    background-color: beige;
+    margin: 3px;
+    padding: 2px;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    border: 2px solid white
+}
+
+.letter-correct {
+    background-color: greenyellow;
+}
+
+.letter-kinda {
+    background-color: yellow;
+}
+
+.letter-no {
+    background-color: gray;
+}
+
+.guess-letter {
+    display: inline-block;
+    background-color: beige;
+    margin: 10px;
+    padding: 3px;
+    border: 14px;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+}
+
+.btn {
+    display: flex;
+
+    
+}
