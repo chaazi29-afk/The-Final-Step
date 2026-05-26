@@ -11,11 +11,11 @@ let stats = {
     winRatio: 0,
     guesses: currentGuess,
 }
-const response = await fetch(url);
-const data = await response.json();
 
 async function findWord() {
     // five letter word
+    const response = await fetch(url);
+    const data = await response.json();
 
     currentWord = data[Math.floor((Math.random()) * data.length)].word;
     console.log(currentWord)
@@ -29,32 +29,46 @@ async function submitGuess() {
         alert("Game Over")
         return
     }
+    const currentInputs = document.querySelectorAll(
+        `.guess-letter`
+    )
     let guessedWord = ""
-    for (let sampleGuess of guesses) {
+    for (let sampleGuess of currentInputs) {
+        if (!sampleGuess.value) {
+            alert("Not enough letters")
+            return
+        }
         guessedWord += sampleGuess.value.toUpperCase()
     }
-    if (guessedWord.length !== 5) {
-        alert("Not enough letters")
-        return
-    }
-    guesses.forEach((guess, index) => {
+    currentInputs.forEach((guess, index) => {
         const inputtedLetter = guess.value.toUpperCase()
-        // finds box to ACTUALLY use
-        const box = document.querySelector(`#letter-${currentGuess + 1}-${index + 1}`)
-        box.textContent = inputtedLetter
-        if (currentWord[index] === inputtedLetter)  box.classList.add("correct");
-        else if (currentWord.includes(inputtedLetter))  box.classList.add("kinda")
-        else box.classList.add("no")
-       
-    })
-    if (guessedWord === currentWord) {
+
+        const box = document.querySelector(
+            `#letter-${currentGuess + 1}-${index + 1}`
+        )
+
+            box.textContent = inputtedLetter
+
+            if(currentWord[index] === inputtedLetter)
+                box.classList.add("correct")
+            else if (currentWord.includes(inputtedLetter))
+                box.classList.add("kinda")
+            else
+                box.classList.add("no")
+
+        })
+       if(guessedWord === currentWord) {
         alert("You win!!")
         return
+       }
+       
+       currentGuess++
+       currentInputs.forEach((guess) => {
+        guess.value = ""
+       })
+        
     }
 
-    currentGuess++
-    stats.guesses = currentGuess
-}
 
 guessBtn.addEventListener("click", submitGuess)
 document.addEventListener("keydown", (e) => {
