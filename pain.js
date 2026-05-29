@@ -11,7 +11,7 @@ let stats = {
     winRatio: 0,
     guesses: currentGuess,
 }
-
+alert("Show stats with Alt + S!")
 async function findWord() {
     // five letter word
     const response = await fetch(url);
@@ -26,6 +26,8 @@ findWord()
 async function submitGuess() {
     
     if (currentGuess >= 6) {
+        stats.gamesPlayed++
+        stats.winRatio = Math.round((stats.score / stats.gamesPlayed) * 100)
         alert("Game Over")
         return
     }
@@ -58,6 +60,9 @@ async function submitGuess() {
 
         })
        if(guessedWord === currentWord) {
+        stats.score++
+        stats.gamesPlayed++
+        stats.winRatio = Math.round((stats.score / stats.gamesPlayed) * 100)
         alert("You win!!")
         return
        }
@@ -72,7 +77,18 @@ async function submitGuess() {
 
 guessBtn.addEventListener("click", submitGuess)
 document.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") submitGuess()
+    if (e.key === "Enter") {
+        submitGuess()
+    }
+
+    if (e.altKey && e.key === "s") {
+        alert(`
+            Wins: ${stats.score}
+            Games Played: ${stats.gamesPlayed}
+            Win Ratio: ${stats.winRatio}%`)
+    }
 })
+
+
 
 
