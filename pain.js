@@ -5,11 +5,14 @@ const guesses = document.querySelectorAll(".guess-letter")
 let currentWord = ""
 let currentGuess = 0
 const chances = document.querySelectorAll(".chance")
-let stats = {
+function saveStats() {
+    localStorage.setItem("stats", JSON.stringify(stats))
+}
+let stats = JSON.parse(localStorage.getItem("stats")) || {
     score: 0,
     gamesPlayed: 0,
     winRatio: 0,
-    guesses: currentGuess,
+    guesses: 0,
 }
 alert("Show stats with Alt + S!")
 async function findWord() {
@@ -28,6 +31,7 @@ async function submitGuess() {
     if (currentGuess >= 6) {
         stats.gamesPlayed++
         stats.winRatio = Math.round((stats.score / stats.gamesPlayed) * 100)
+        saveStats();
         alert("Game Over")
         return
     }
@@ -63,6 +67,7 @@ async function submitGuess() {
         stats.score++
         stats.gamesPlayed++
         stats.winRatio = Math.round((stats.score / stats.gamesPlayed) * 100)
+        saveStats();
         alert("You win!!")
         return
        }
